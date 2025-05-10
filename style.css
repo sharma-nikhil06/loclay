@@ -1,81 +1,90 @@
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  margin: 0;
+  background: #f5f5f5;
 }
 
-.top-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #111;
+.top-bar {
+  background: #111;
   color: white;
-  padding: 10px 20px;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.logo img {
-  height: 40px;
-}
-
-.search-bar input,
-.location-search input {
+.top-bar input[type="text"] {
   padding: 6px;
-  font-size: 14px;
+  border: none;
+  border-radius: 4px;
 }
 
-.search-bar button,
-.location-search button {
-  margin-left: 5px;
-  padding: 6px 12px;
+.top-bar button {
+  padding: 6px 10px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.store-filters label {
+.logo {
+  height: 40px;
   margin-right: 10px;
-  font-size: 14px;
 }
 
-.ad-banner {
-  background-color: white;
-  padding: 10px;
+.ads-bar {
   text-align: center;
-  font-weight: bold;
+  padding: 6px;
+  background: #fff;
   color: red;
+  font-weight: bold;
 }
 
-.category-bar ul {
-  list-style: none;
+.category-nav {
   display: flex;
   justify-content: center;
-  padding: 10px;
-  background-color: #fff;
-  margin: 0;
-}
-
-.category-bar li {
-  margin: 0 15px;
-  cursor: pointer;
+  gap: 25px;
+  background: #fff;
+  padding: 12px 0;
   font-weight: bold;
 }
 
-.product-grid {
+.products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
   padding: 20px;
 }
 
-.product-grid .product-card {
-  background-color: white;
-  padding: 12px;
+.product-card {
+  background: white;
   border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
   text-align: center;
-  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  padding: 10px;
 }
 
-.product-grid img {
+.product-card img {
   width: 100%;
-  height: auto;
+  max-height: 180px;
   object-fit: contain;
+  border-radius: 6px;
+}
+
+.product-title {
+  font-size: 14px;
+  margin: 10px 0 4px;
+}
+
+.product-price {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.product-store {
+  font-size: 12px;
+  color: #555;
 }
