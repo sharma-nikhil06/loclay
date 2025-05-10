@@ -1,43 +1,36 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: Arial, sans-serif;
   background: #f5f5f5;
 }
 
 .top-bar {
   background: #111;
   color: white;
-  padding: 10px;
   display: flex;
-  gap: 8px;
   align-items: center;
+  padding: 10px;
+  gap: 10px;
   flex-wrap: wrap;
-}
-
-.top-bar input[type="text"] {
-  padding: 6px;
-  border: none;
-  border-radius: 4px;
-}
-
-.top-bar button {
-  padding: 6px 10px;
-  background: #444;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 .logo {
   height: 40px;
-  margin-right: 10px;
+}
+
+input[type="text"] {
+  padding: 6px;
+}
+
+button {
+  padding: 6px 10px;
+  cursor: pointer;
 }
 
 .ads-bar {
   text-align: center;
-  padding: 6px;
-  background: #fff;
+  padding: 10px;
+  background: white;
   color: red;
   font-weight: bold;
 }
@@ -45,46 +38,44 @@ body {
 .category-nav {
   display: flex;
   justify-content: center;
-  gap: 25px;
-  background: #fff;
-  padding: 12px 0;
-  font-weight: bold;
+  gap: 20px;
+  padding: 10px;
+  background: white;
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+main#product-list {
   padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
 }
 
 .product-card {
   background: white;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  text-align: center;
   padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
 }
 
 .product-card img {
-  width: 100%;
-  max-height: 180px;
-  object-fit: contain;
-  border-radius: 6px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
 
 .product-title {
   font-size: 14px;
-  margin: 10px 0 4px;
+  margin: 10px 0 5px;
+  font-weight: bold;
 }
 
 .product-price {
   color: red;
   font-weight: bold;
-  margin-bottom: 4px;
 }
 
 .product-store {
   font-size: 12px;
-  color: #555;
+  color: #444;
 }
