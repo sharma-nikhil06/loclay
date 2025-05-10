@@ -1,56 +1,51 @@
 let products = [];
-let selectedLocation = '';
-let selectedStores = ["Target", "Marshalls", "Burlington"];
+let userZip = "49544";
 
-fetch("combined_products.json")
+fetch("products.json")
   .then(res => res.json())
   .then(data => {
     products = data;
     renderProducts(products);
   });
 
-function renderProducts(filtered) {
-  const container = document.getElementById("products");
-  container.innerHTML = "";
-
-  filtered.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.innerHTML = `
-      <img src="${p.image || 'placeholder.jpg'}" alt="${p.title}" />
-      <h4>${p.title}</h4>
-      <p><strong>${p.price}</strong></p>
-      <p style="font-size: 12px;">${p.store}</p>
-    `;
-    container.appendChild(card);
-  });
-}
-
 function setLocation() {
-  selectedLocation = document.getElementById("locationInput").value.trim();
-  filterProducts();
+  const zipInput = document.getElementById("zipInput");
+  userZip = zipInput.value.trim();
+  searchProducts();
 }
 
 function searchProducts() {
-  const term = document.getElementById("searchInput").value.toLowerCase();
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+  const selectedStores = Array.from(document.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+
   const filtered = products.filter(p =>
-    p.title.toLowerCase().includes(term) &&
-    selectedStores.some(store => p.store.includes(store)) &&
-    (selectedLocation === "" || p.store.includes(selectedLocation))
+    p.title.toLowerCase().includes(searchTerm) &&
+    selectedStores.includes(p.store.split("–")[0].trim())
   );
+
   renderProducts(filtered);
 }
 
-function filterByCategory(category) {
-  const filtered = products.filter(p =>
-    p.title.toLowerCase().includes(category.toLowerCase()) &&
-    selectedStores.some(store => p.store.includes(store)) &&
-    (selectedLocation === "" || p.store.includes(selectedLocation))
-  );
-  renderProducts(filtered);
-}
+function renderProducts(data) {
+  const container = document.getElementById("productsContainer");
+  container.innerHTML = "";
 
-function filterProducts() {
-  selectedStores = Array.from(document.querySelectorAll(".store-filters input:checked")).map(input => input.value);
-  searchProducts();
+  if (data.length === 0) {
+    container.innerHTML = "<p style='text-align:center;'>No products found.</p>";
+    return;
+  }
+
+  data.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    card.innerHTML = `
+      <img src="${item.image}" alt="${item.title}" />
+      <div class="product-title">${item.title}</div>
+      <div class="product-price">${item.price}</div>
+      <div class="product-store">${item.store}</div>
+    `;
+
+    container.appendChild(card);
+  });
 }
