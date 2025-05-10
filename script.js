@@ -1,47 +1,56 @@
-let userLocation = "";
 let products = [];
+let selectedLocation = '';
+let selectedStores = ["Target", "Marshalls", "Burlington"];
 
-async function loadProducts() {
-  const res = await fetch("products.json");
-  products = await res.json();
+fetch("combined_products.json")
+  .then(res => res.json())
+  .then(data => {
+    products = data;
+    renderProducts(products);
+  });
+
+function renderProducts(filtered) {
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  filtered.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.innerHTML = `
+      <img src="${p.image || 'placeholder.jpg'}" alt="${p.title}" />
+      <h4>${p.title}</h4>
+      <p><strong>${p.price}</strong></p>
+      <p style="font-size: 12px;">${p.store}</p>
+    `;
+    container.appendChild(card);
+  });
 }
 
 function setLocation() {
-  const zip = document.getElementById("locationInput").value.trim();
-  if (zip) {
-    userLocation = zip;
-    alert(`Location set to ZIP: ${zip}`);
-  }
+  selectedLocation = document.getElementById("locationInput").value.trim();
+  filterProducts();
 }
 
 function searchProducts() {
-  const query = document.getElementById("searchInput").value.trim().toLowerCase();
+  const term = document.getElementById("searchInput").value.toLowerCase();
   const filtered = products.filter(p =>
-    p.title.toLowerCase().includes(query) &&
-    p.zip.includes(userLocation)
+    p.title.toLowerCase().includes(term) &&
+    selectedStores.some(store => p.store.includes(store)) &&
+    (selectedLocation === "" || p.store.includes(selectedLocation))
   );
   renderProducts(filtered);
 }
 
-function renderProducts(list) {
-  const grid = document.getElementById("productGrid");
-  grid.innerHTML = "";
-  if (list.length === 0) {
-    grid.innerHTML = "<p>No products found.</p>";
-    return;
-  }
-
-  list.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" />
-      <h3>${p.title}</h3>
-      <p><strong>${p.price}</strong></p>
-      <p>${p.store}</p>
-    `;
-    grid.appendChild(card);
-  });
+function filterByCategory(category) {
+  const filtered = products.filter(p =>
+    p.title.toLowerCase().includes(category.toLowerCase()) &&
+    selectedStores.some(store => p.store.includes(store)) &&
+    (selectedLocation === "" || p.store.includes(selectedLocation))
+  );
+  renderProducts(filtered);
 }
 
-window.onload = loadProducts;
+function filterProducts() {
+  selectedStores = Array.from(document.querySelectorAll(".store-filters input:checked")).map(input => input.value);
+  searchProducts();
+}
