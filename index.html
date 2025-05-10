@@ -2,45 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Loclay – Find Products Near You</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="top-nav">
-    <div class="logo">
-      <img src="loclay_logo.png" alt="Loclay Logo" />
-    </div>
-    <div class="location-search">
-      <input type="text" id="locationInput" placeholder="Enter ZIP code (e.g., 49544)" />
+  <header>
+    <div class="top-bar">
+      <img src="logo.png" alt="Loclay Logo" class="logo" />
+      <input type="text" id="zipInput" placeholder="Enter ZIP code (e.g., 49544)" />
       <button onclick="setLocation()">Set Location</button>
-    </div>
-    <div class="store-filters">
-      <label><input type="checkbox" value="Target" checked onchange="filterProducts()" /> Target</label>
-      <label><input type="checkbox" value="Marshalls" checked onchange="filterProducts()" /> Marshalls</label>
-      <label><input type="checkbox" value="Burlington" checked onchange="filterProducts()" /> Burlington</label>
-    </div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search for shoes, jackets, deals..." />
+
+      <label><input type="checkbox" value="Target" checked /> Target</label>
+      <label><input type="checkbox" value="Marshalls" checked /> Marshalls</label>
+      <label><input type="checkbox" value="Burlington" checked /> Burlington</label>
+
+      <input type="text" id="searchInput" placeholder="Search for items..." />
       <button onclick="searchProducts()">Search</button>
     </div>
+
+    <div class="ads-bar">
+      <span>🔥 Target Deals</span>
+      <span>🛍️ Burlington Offers</span>
+      <span>🛒 Marshalls Weekly Specials</span>
+    </div>
+
+    <nav class="category-nav">
+      <a href="#">Men</a>
+      <a href="#">Women</a>
+      <a href="#">Kids</a>
+      <a href="#">Home</a>
+    </nav>
   </header>
 
   <main>
-    <div class="ad-banner">
-      🔥 Target Deals &nbsp;&nbsp;&nbsp; 🎁 Burlington Offers &nbsp;&nbsp;&nbsp; 🛍️ Marshalls Weekly Specials
-    </div>
-
-    <div class="category-bar">
-      <ul>
-        <li onclick="filterByCategory('Men')">Men</li>
-        <li onclick="filterByCategory('Women')">Women</li>
-        <li onclick="filterByCategory('Kids')">Kids</li>
-        <li onclick="filterByCategory('Home')">Home</li>
-      </ul>
-    </div>
-
-    <div id="products" class="product-grid"></div>
+    <div id="productsContainer" class="products-grid"></div>
   </main>
 
   <script src="script.js"></script>
