@@ -12,16 +12,17 @@ function setLocation() {
 }
 
 function searchProducts() {
-  const zip = localStorage.getItem("zip");
-  const query = document.getElementById("searchInput").value.toLowerCase();
+  const zip = localStorage.getItem("zip") || "";
+  const query = document.getElementById("searchInput").value.trim().toLowerCase();
   const checkedStores = Array.from(document.querySelectorAll("input[type=checkbox]:checked"))
     .map(cb => cb.value);
 
-  const filtered = allProducts.filter(p => 
-    p.title.toLowerCase().includes(query) &&
-    checkedStores.some(store => p.store.includes(store)) &&
-    p.store.includes(zip)
-  );
+  const filtered = allProducts.filter(p => {
+    const titleMatch = p.title.toLowerCase().includes(query);
+    const storeMatch = checkedStores.some(store => p.store.toLowerCase().includes(store.toLowerCase()));
+    const zipMatch = p.store.includes(zip);
+    return titleMatch && storeMatch && zipMatch;
+  });
 
   renderProducts(filtered);
 }
