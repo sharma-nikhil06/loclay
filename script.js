@@ -1,51 +1,51 @@
-let products = [];
-let userZip = "49544";
+let allProducts = [];
 
-fetch("products.json")
-  .then(res => res.json())
-  .then(data => {
-    products = data;
-    renderProducts(products);
-  });
+async function loadProducts() {
+  const res = await fetch("products.json");
+  allProducts = await res.json();
+}
 
 function setLocation() {
-  const zipInput = document.getElementById("zipInput");
-  userZip = zipInput.value.trim();
-  searchProducts();
+  const zip = document.getElementById("zipcode").value.trim();
+  if (!zip) return;
+  localStorage.setItem("zip", zip);
 }
 
 function searchProducts() {
-  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-  const selectedStores = Array.from(document.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+  const zip = localStorage.getItem("zip");
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const checkedStores = Array.from(document.querySelectorAll("input[type=checkbox]:checked"))
+    .map(cb => cb.value);
 
-  const filtered = products.filter(p =>
-    p.title.toLowerCase().includes(searchTerm) &&
-    selectedStores.includes(p.store.split("–")[0].trim())
+  const filtered = allProducts.filter(p => 
+    p.title.toLowerCase().includes(query) &&
+    checkedStores.some(store => p.store.includes(store)) &&
+    p.store.includes(zip)
   );
 
   renderProducts(filtered);
 }
 
-function renderProducts(data) {
-  const container = document.getElementById("productsContainer");
+function renderProducts(products) {
+  const container = document.getElementById("product-list");
   container.innerHTML = "";
 
-  if (data.length === 0) {
-    container.innerHTML = "<p style='text-align:center;'>No products found.</p>";
+  if (products.length === 0) {
+    container.innerHTML = "<p>No matching products found.</p>";
     return;
   }
 
-  data.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-
-    card.innerHTML = `
-      <img src="${item.image}" alt="${item.title}" />
-      <div class="product-title">${item.title}</div>
-      <div class="product-price">${item.price}</div>
-      <div class="product-store">${item.store}</div>
+  products.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "product-card";
+    div.innerHTML = `
+      <img src="${p.image}" alt="${p.title}" />
+      <div class="product-title">${p.title}</div>
+      <div class="product-price">${p.price}</div>
+      <div class="product-store">${p.store}</div>
     `;
-
-    container.appendChild(card);
+    container.appendChild(div);
   });
 }
+
+window.onload = loadProducts;
