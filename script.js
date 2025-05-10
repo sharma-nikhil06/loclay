@@ -15,12 +15,22 @@ function searchProducts() {
   const zip = localStorage.getItem("zip") || "";
   const query = document.getElementById("searchInput").value.trim().toLowerCase();
   const checkedStores = Array.from(document.querySelectorAll("input[type=checkbox]:checked"))
-    .map(cb => cb.value);
+    .map(cb => cb.value.toLowerCase());
+
+  const synonyms = {
+    shoes: ["shoe", "sneaker", "boot", "loafer", "sandal", "clog", "runner"],
+    sneakers: ["sneaker", "runner", "trainer"],
+    sandals: ["sandal", "slide", "slip-on"]
+  };
+
+  const expandedQuery = new Set([query]);
+  (synonyms[query] || []).forEach(q => expandedQuery.add(q));
 
   const filtered = allProducts.filter(p => {
-    const titleMatch = p.title.toLowerCase().includes(query);
-    const storeMatch = checkedStores.some(store => p.store.toLowerCase().includes(store.toLowerCase()));
-    const zipMatch = p.store.includes(zip);
+    const title = p.title.toLowerCase();
+    const titleMatch = [...expandedQuery].some(q => title.includes(q));
+    const storeMatch = checkedStores.some(store => p.store.toLowerCase().includes(store));
+    const zipMatch = zip === "" || p.store.includes(zip);
     return titleMatch && storeMatch && zipMatch;
   });
 
