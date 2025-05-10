@@ -7,37 +7,33 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="top-bar">
-      <img src="logo.png" alt="Loclay Logo" class="logo" />
-      <input type="text" id="zipInput" placeholder="Enter ZIP code (e.g., 49544)" />
-      <button onclick="setLocation()">Set Location</button>
+  <header class="top-bar">
+    <img src="logo.png" alt="Loclay Logo" class="logo"/>
+    <input type="text" id="zipcode" placeholder="Enter ZIP code (e.g., 49544)" />
+    <button onclick="setLocation()">Set Location</button>
 
-      <label><input type="checkbox" value="Target" checked /> Target</label>
-      <label><input type="checkbox" value="Marshalls" checked /> Marshalls</label>
-      <label><input type="checkbox" value="Burlington" checked /> Burlington</label>
+    <label><input type="checkbox" value="Target" checked /> Target</label>
+    <label><input type="checkbox" value="Marshalls" checked /> Marshalls</label>
+    <label><input type="checkbox" value="Burlington" checked /> Burlington</label>
 
-      <input type="text" id="searchInput" placeholder="Search for items..." />
-      <button onclick="searchProducts()">Search</button>
-    </div>
-
-    <div class="ads-bar">
-      <span>🔥 Target Deals</span>
-      <span>🛍️ Burlington Offers</span>
-      <span>🛒 Marshalls Weekly Specials</span>
-    </div>
-
-    <nav class="category-nav">
-      <a href="#">Men</a>
-      <a href="#">Women</a>
-      <a href="#">Kids</a>
-      <a href="#">Home</a>
-    </nav>
+    <input type="text" id="searchInput" placeholder="Search for items..." />
+    <button onclick="searchProducts()">Search</button>
   </header>
 
-  <main>
-    <div id="productsContainer" class="products-grid"></div>
-  </main>
+  <div class="ads-bar">
+    <span>🔥 Target Deals</span>
+    <span>🛍️ Burlington Offers</span>
+    <span>🛒 Marshalls Weekly Specials</span>
+  </div>
+
+  <nav class="category-nav">
+    <a href="#">Men</a>
+    <a href="#">Women</a>
+    <a href="#">Kids</a>
+    <a href="#">Home</a>
+  </nav>
+
+  <main id="product-list"></main>
 
   <script src="script.js"></script>
 </body>
