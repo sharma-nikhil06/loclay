@@ -2,46 +2,104 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background: #f4f4f4;
 }
 
 header {
-  background-color: #222;
-  color: white;
-  padding: 1rem;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
 }
 
-nav h1 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.search-banner {
-  background-color: white;
-  padding: 1rem;
-  text-align: center;
-}
-
-.search-banner input {
-  width: 250px;
-  padding: 0.5rem;
-  font-size: 1rem;
-}
-
-.search-banner button {
-  padding: 0.5rem 1rem;
-  margin-left: 10px;
-  font-size: 1rem;
-}
-
-#product-list {
+.menu-bar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.product {
+.menu-bar .logo img {
+  height: 40px;
+}
+
+.menu-bar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu-bar nav li {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.location-input,
+.search-bar {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.location-input input,
+.search-bar input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  padding: 1rem;
-  width: 200px;
+}
+
+.location-input button,
+.search-bar button {
+  padding: 10px 15px;
+  margin-left: 5px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.ad-banner {
+  background-color: #fff;
+  padding: 10px;
+  margin: 0 auto;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ad-scroll {
+  display: inline-block;
+  animation: scrollAd 15s linear infinite;
+}
+
+@keyframes scrollAd {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.product-card h3 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.product-card p {
+  margin: 5px 0;
 }
