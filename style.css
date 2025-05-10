@@ -2,13 +2,13 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f4f4f4;
+  background: #f9f9f9;
 }
 
 header {
   background-color: #000;
   color: #fff;
-  padding: 10px 20px;
+  padding: 10px 30px;
 }
 
 .menu-bar {
@@ -24,49 +24,53 @@ header {
 .menu-bar nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
 }
 
 .menu-bar nav li {
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+}
+
+main {
+  padding: 20px 40px;
 }
 
 .location-input,
 .search-bar {
-  text-align: center;
-  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+  gap: 10px;
 }
 
 .location-input input,
 .search-bar input {
   padding: 10px;
-  width: 250px;
-  border-radius: 4px;
+  width: 280px;
+  border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-.location-input button,
-.search-bar button {
-  padding: 10px 15px;
-  margin-left: 5px;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
 .ad-banner {
-  background-color: #fff;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 6px;
   padding: 10px;
-  margin: 0 auto;
+  max-width: 800px;
   overflow: hidden;
   white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
 .ad-scroll {
   display: inline-block;
   animation: scrollAd 15s linear infinite;
+  font-weight: bold;
+  color: #e60023;
 }
 
 @keyframes scrollAd {
@@ -76,30 +80,30 @@ header {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
 }
 
 .product-card {
   background: #fff;
+  padding: 15px;
   border-radius: 8px;
-  padding: 10px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
 }
 
 .product-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
+  max-width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
 }
 
 .product-card h3 {
   font-size: 16px;
-  margin: 10px 0;
+  margin: 10px 0 5px;
 }
 
 .product-card p {
-  margin: 5px 0;
+  margin: 4px 0;
 }
