@@ -1,62 +1,54 @@
 let allProducts = [];
+let selectedLocation = "";
+let selectedStores = ["Target", "Marshalls", "Burlington"];
 
 async function loadProducts() {
-  const res = await fetch("products.json");
-  allProducts = await res.json();
+  try {
+    const response = await fetch('products.json');
+    allProducts = await response.json();
+  } catch (error) {
+    console.error("Error loading products:", error);
+  }
 }
 
 function setLocation() {
-  const zip = document.getElementById("zipcode").value.trim();
-  if (!zip) return;
-  localStorage.setItem("zip", zip);
+  const zipInput = document.getElementById("zipInput");
+  selectedLocation = zipInput.value.trim();
 }
 
 function searchProducts() {
-  const zip = localStorage.getItem("zip") || "";
-  const query = document.getElementById("searchInput").value.trim().toLowerCase();
-  const checkedStores = Array.from(document.querySelectorAll("input[type=checkbox]:checked"))
-    .map(cb => cb.value.toLowerCase());
+  const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
 
-  const synonyms = {
-    shoes: ["shoe", "sneaker", "boot", "loafer", "sandal", "clog", "runner"],
-    sneakers: ["sneaker", "runner", "trainer"],
-    sandals: ["sandal", "slide", "slip-on"]
-  };
+  const storeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+  selectedStores = Array.from(storeCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
 
-  const expandedQuery = new Set([query]);
-  (synonyms[query] || []).forEach(q => expandedQuery.add(q));
-
-  const filtered = allProducts.filter(p => {
-    const title = p.title.toLowerCase();
-    const titleMatch = [...expandedQuery].some(q => title.includes(q));
-    const storeMatch = checkedStores.some(store => p.store.toLowerCase().includes(store));
-    const zipMatch = zip === "" || p.store.includes(zip);
-    return titleMatch && storeMatch && zipMatch;
+  const filtered = allProducts.filter(product => {
+    const titleMatch = product.title.toLowerCase().includes(searchInput);
+    const locationMatch = selectedLocation === "" || product.store.toLowerCase().includes(selectedLocation.toLowerCase());
+    const storeMatch = selectedStores.some(store => product.store.toLowerCase().includes(store.toLowerCase()));
+    return titleMatch && locationMatch && storeMatch;
   });
 
-  renderProducts(filtered);
-}
-
-function renderProducts(products) {
-  const container = document.getElementById("product-list");
-  container.innerHTML = "";
-
-  if (products.length === 0) {
-    container.innerHTML = "<p>No matching products found.</p>";
+  if (filtered.length === 0) {
+    resultsDiv.innerHTML = "<p>No matching products found.</p>";
     return;
   }
 
-  products.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "product-card";
-    div.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" />
-      <div class="product-title">${p.title}</div>
-      <div class="product-price">${p.price}</div>
-      <div class="product-store">${p.store}</div>
+  filtered.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.title}">
+      <h3>${product.title}</h3>
+      <p class="price">${product.price}</p>
+      <p class="store">${product.store}</p>
     `;
-    container.appendChild(div);
+    resultsDiv.appendChild(card);
   });
 }
 
-window.onload = loadProducts;
+document.addEventListener("DOMContentLoaded", loadProducts);
