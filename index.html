@@ -2,23 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loclay - Find Products Nearby</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loclay</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <nav>
-      <h1>Loclay</h1>
-    </nav>
-    <div class="search-banner">
-      <input type="text" id="zip-input" placeholder="Enter ZIP Code (e.g. 49544)" />
-      <button onclick="filterProducts()">Search</button>
+    <div class="menu-bar">
+      <div class="logo">
+        <img src="logo.png" alt="Loclay Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li>Men</li>
+          <li>Women</li>
+          <li>Kids</li>
+          <li>Home</li>
+        </ul>
+      </nav>
     </div>
   </header>
 
   <main>
-    <section id="product-list"></section>
+    <div class="location-input">
+      <input type="text" id="locationInput" placeholder="Enter ZIP code (e.g., 49544)" />
+      <button onclick="setLocation()">Set Location</button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="What are you looking for?" />
+      <button onclick="searchProducts()">Search</button>
+    </div>
+
+    <div class="ad-banner">
+      <div class="ad-scroll" id="adScroll">
+        <span>🎯 Target Deals</span>
+        <span>🛍️ Burlington Offers</span>
+        <span>🔥 Marshalls Weekly Specials</span>
+      </div>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
   </main>
 
   <script src="script.js"></script>
