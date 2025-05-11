@@ -43,25 +43,26 @@ button {
   background: white;
 }
 
-main#product-list {
-  padding: 20px;
+#results {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+  padding: 20px;
 }
 
 .product-card {
   background: white;
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 16px;
   text-align: center;
-  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .product-card img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
-  border-radius: 4px;
+  object-fit: contain;
+  margin-bottom: 12px;
 }
 
 .product-title {
