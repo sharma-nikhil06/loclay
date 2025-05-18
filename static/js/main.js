@@ -22,15 +22,16 @@ function searchProducts() {
   const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
   const storeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
   selectedStores = Array.from(storeCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+
   const listDiv = document.getElementById("product-list");
   listDiv.innerHTML = "";
 
-  // 🔍 Convert to lowercase for case-insensitive matching
-  const allowedStores = (zipToStores[selectedLocation] || []).map(s => s.toLowerCase());
+  const normalizedZip = selectedLocation.trim();
+  const allowedStores = (zipToStores[normalizedZip] || []).map(s => s.trim().toLowerCase());
 
   const filtered = allProducts.filter(p => {
     const titleMatch = p.title.toLowerCase().includes(searchTerm);
-    const locationMatch = allowedStores.length === 0 || allowedStores.includes(p.store.toLowerCase());
+    const locationMatch = allowedStores.length === 0 || allowedStores.includes(p.store.trim().toLowerCase());
     const storeMatch = selectedStores.some(s => p.store.toLowerCase().includes(s.toLowerCase()));
     return titleMatch && locationMatch && storeMatch;
   });
