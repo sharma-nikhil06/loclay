@@ -2,6 +2,12 @@ let allProducts = [];
 let selectedLocation = "";
 let selectedStores = ["Target", "Marshalls", "Burlington"];
 
+// 🔁 ZIP to store mapping
+const zipToStores = {
+  "49544": ["target – walker, mi", "burlington – walker, mi", "marshalls – walker, mi"],
+  "49503": ["target – grand rapids, mi"]
+};
+
 async function loadProducts() {
   const res = await fetch('/products.json');
   allProducts = await res.json();
@@ -18,15 +24,22 @@ function searchProducts() {
   selectedStores = Array.from(storeCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
   const listDiv = document.getElementById("product-list");
   listDiv.innerHTML = "";
-  const filtered = allProducts.filter(p =>
-    p.title.toLowerCase().includes(searchTerm) &&
-    p.store.toLowerCase().includes(selectedLocation.toLowerCase()) &&
-    selectedStores.some(s => p.store.toLowerCase().includes(s.toLowerCase()))
-  );
+
+  // 🔍 Convert to lowercase for case-insensitive matching
+  const allowedStores = (zipToStores[selectedLocation] || []).map(s => s.toLowerCase());
+
+  const filtered = allProducts.filter(p => {
+    const titleMatch = p.title.toLowerCase().includes(searchTerm);
+    const locationMatch = allowedStores.length === 0 || allowedStores.includes(p.store.toLowerCase());
+    const storeMatch = selectedStores.some(s => p.store.toLowerCase().includes(s.toLowerCase()));
+    return titleMatch && locationMatch && storeMatch;
+  });
+
   if (filtered.length === 0) {
     listDiv.innerHTML = "<p>No matching products found.</p>";
     return;
   }
+
   filtered.forEach(p => {
     const card = document.createElement("div");
     card.className = "product-card";
