@@ -31,7 +31,7 @@ function searchProducts() {
 
   const filtered = allProducts.filter(p => {
     const titleMatch = p.title.toLowerCase().includes(searchTerm);
-    const locationMatch = allowedStores.length === 0 || allowedStores.includes(p.store.trim().toLowerCase());
+    const locationMatch = true;
     const storeMatch = selectedStores.some(s => p.store.toLowerCase().includes(s.toLowerCase()));
     return titleMatch && locationMatch && storeMatch;
   });
