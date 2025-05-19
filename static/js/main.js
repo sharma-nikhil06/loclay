@@ -2,7 +2,7 @@ let allProducts = [];
 let selectedLocation = "";
 let selectedStores = ["Target", "Marshalls", "Burlington"];
 
-// 🔁 ZIP to store mapping
+// ZIP to store mapping
 const zipToStores = {
   "49544": ["target – walker, mi", "burlington – walker, mi", "marshalls – walker, mi"],
   "49503": ["target – grand rapids, mi"]
@@ -16,12 +16,16 @@ async function loadProducts() {
 function setLocation() {
   const zipInput = document.getElementById("zipcode");
   selectedLocation = zipInput.value.trim();
+  console.log("ZIP set to:", selectedLocation);
 }
 
 function searchProducts() {
   const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+
   const storeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-  selectedStores = Array.from(storeCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+  selectedStores = Array.from(storeCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
 
   const listDiv = document.getElementById("product-list");
   listDiv.innerHTML = "";
@@ -29,10 +33,15 @@ function searchProducts() {
   const normalizedZip = selectedLocation.trim();
   const allowedStores = (zipToStores[normalizedZip] || []).map(s => s.trim().toLowerCase());
 
+  console.log("Allowed stores for ZIP", normalizedZip, ":", allowedStores);
+
   const filtered = allProducts.filter(p => {
     const titleMatch = p.title.toLowerCase().includes(searchTerm);
-    const locationMatch = true;
+    const locationMatch = allowedStores.length === 0 || allowedStores.includes(p.store.trim().toLowerCase());
     const storeMatch = selectedStores.some(s => p.store.toLowerCase().includes(s.toLowerCase()));
+
+    console.log("Evaluating:", p.title, "| Match:", titleMatch && locationMatch && storeMatch);
+
     return titleMatch && locationMatch && storeMatch;
   });
 
@@ -44,10 +53,12 @@ function searchProducts() {
   filtered.forEach(p => {
     const card = document.createElement("div");
     card.className = "product-card";
-    card.innerHTML = `<img src="${p.image}" alt="${p.title}" />
-                      <h3>${p.title}</h3>
-                      <p class="price">${p.price}</p>
-                      <p class="store">${p.store}</p>`;
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.title}" />
+      <h3>${p.title}</h3>
+      <p class="price">${p.price}</p>
+      <p class="store">${p.store}</p>
+    `;
     listDiv.appendChild(card);
   });
 }
