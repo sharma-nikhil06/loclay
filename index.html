@@ -14,6 +14,12 @@
       <button onclick="setLocation()">Set Location</button>
       <input type="text" id="searchInput" placeholder="Search for items..." />
       <button onclick="searchProducts()">Search</button>
+      <select id="sortOption" onchange="searchProducts()">
+        <option value="">Sort by</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="store-asc">Store: A to Z</option>
+      </select>
     </div>
     <!-- Store filters hidden
     <div class="filters" style="display: none;">
