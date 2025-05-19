@@ -2,7 +2,6 @@ let allProducts = [];
 let selectedLocation = "";
 let selectedStores = ["Target", "Marshalls", "Burlington"];
 
-// ZIP to store mapping
 const zipToStores = {
   "49544": ["target – walker, mi", "burlington – walker, mi", "marshalls – walker, mi"],
   "49503": ["target – grand rapids, mi"]
@@ -20,15 +19,16 @@ function setLocation() {
 }
 
 function searchProducts() {
-  const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+  const loader = document.getElementById("loader");
+  const listDiv = document.getElementById("product-list");
+  loader.style.display = "block";
+  listDiv.innerHTML = "";
 
+  const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
   const storeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
   selectedStores = Array.from(storeCheckboxes)
     .filter(cb => cb.checked)
     .map(cb => cb.value);
-
-  const listDiv = document.getElementById("product-list");
-  listDiv.innerHTML = "";
 
   const normalizedZip = selectedLocation.trim();
   const allowedStores = (zipToStores[normalizedZip] || []).map(s => s.trim().toLowerCase());
@@ -38,12 +38,13 @@ function searchProducts() {
   const filtered = allProducts.filter(p => {
     const titleMatch = p.title.toLowerCase().includes(searchTerm);
     const locationMatch = allowedStores.length === 0 || allowedStores.includes(p.store.trim().toLowerCase());
-    const storeMatch = true;
+    const storeMatch = selectedStores.some(s => p.store.toLowerCase().includes(s.toLowerCase()));
 
     console.log("Evaluating:", p.title, "| Match:", titleMatch && locationMatch && storeMatch);
-
     return titleMatch && locationMatch && storeMatch;
   });
+
+  loader.style.display = "none";
 
   if (filtered.length === 0) {
     listDiv.innerHTML = "<p>No matching products found.</p>";
