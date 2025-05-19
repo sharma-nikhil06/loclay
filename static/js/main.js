@@ -45,6 +45,15 @@ function searchProducts() {
   });
 
   loader.style.display = "none";
+  const sortOption = document.getElementById("sortOption").value;
+
+  if (sortOption === "price-asc") {
+    filtered.sort((a, b) => parseFloat(a.price.replace(/[^0-9.]/g, '')) - parseFloat(b.price.replace(/[^0-9.]/g, '')));
+  } else if (sortOption === "price-desc") {
+    filtered.sort((a, b) => parseFloat(b.price.replace(/[^0-9.]/g, '')) - parseFloat(a.price.replace(/[^0-9.]/g, '')));
+  } else if (sortOption === "store-asc") {
+    filtered.sort((a, b) => a.store.localeCompare(b.store));
+  }
 
   if (filtered.length === 0) {
     listDiv.innerHTML = "<p>No matching products found.</p>";
