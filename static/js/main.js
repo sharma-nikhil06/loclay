@@ -32,7 +32,7 @@ function searchProducts() {
   const filtered = allProducts.filter(product => {
     const titleMatch = product.title.toLowerCase().includes(searchInput);
     const locationMatch = selectedLocation === "" || product.store.toLowerCase().includes(selectedLocation.toLowerCase());
-    const storeMatch = selectedStores.some(store => product.store.toLowerCase().includes(store.toLowerCase()));
+    const storeMatch = selectedStores.length === 0 || selectedStores.some(store => product.store.toLowerCase().includes(store.toLowerCase()));
     return titleMatch && locationMatch && storeMatch;
   });
 
@@ -48,7 +48,6 @@ function searchProducts() {
       <img src="${product.image}" alt="${product.title}" />
       <h3>${product.title}</h3>
       <p class="price">${product.price}</p>
-      <p class="store">${product.store}</p>
     `;
     listDiv.appendChild(card);
   });
