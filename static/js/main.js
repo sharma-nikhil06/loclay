@@ -29,10 +29,13 @@ function searchProducts() {
 
   const filtered = allProducts.filter(product => {
     const titleMatch = product.title.toLowerCase().includes(searchInput);
-    const locationMatch = selectedLocation === "" || product.store.toLowerCase().includes(selectedLocation);
     const storeMatch = selectedStores.length === 0 || selectedStores.some(store =>
       product.store.toLowerCase().includes(store.toLowerCase())
     );
+    
+    // New zip logic
+    const locationMatch = selectedLocation === "" || product.store.toLowerCase().includes(selectedLocation);
+
     return titleMatch && locationMatch && storeMatch;
   });
 
