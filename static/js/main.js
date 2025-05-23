@@ -13,26 +13,26 @@ async function loadProducts() {
 
 function setLocation() {
   const zipInput = document.getElementById("zipcode");
-  selectedLocation = zipInput.value.trim();
+  selectedLocation = zipInput.value.trim().toLowerCase();
 }
 
 function searchProducts() {
   const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
   const listDiv = document.getElementById("product-list");
 
-  // Get selected stores
   const storeCheckboxes = document.querySelectorAll('input[type="checkbox"]');
   selectedStores = Array.from(storeCheckboxes)
     .filter(cb => cb.checked)
     .map(cb => cb.value);
 
-  // Clear previous results
   listDiv.innerHTML = "";
 
   const filtered = allProducts.filter(product => {
     const titleMatch = product.title.toLowerCase().includes(searchInput);
-    const locationMatch = selectedLocation === "" || product.store.toLowerCase().includes(selectedLocation.toLowerCase());
-    const storeMatch = selectedStores.length === 0 || selectedStores.some(store => product.store.toLowerCase().includes(store.toLowerCase()));
+    const locationMatch = selectedLocation === "" || product.store.toLowerCase().includes(selectedLocation);
+    const storeMatch = selectedStores.length === 0 || selectedStores.some(store =>
+      product.store.toLowerCase().includes(store.toLowerCase())
+    );
     return titleMatch && locationMatch && storeMatch;
   });
 
